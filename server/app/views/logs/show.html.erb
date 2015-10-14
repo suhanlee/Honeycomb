@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @log.model %>
+</p>
+
+<p>
+  <strong>Contents:</strong>
+  <p>
+  <%= raw @log.contents.html_safe.gsub(/\n/, '<br />') %>
+  </p>
+</p>
+
+<%= link_to 'Edit', edit_log_path(@log) %> |
+<%= link_to 'Back', logs_path %>
