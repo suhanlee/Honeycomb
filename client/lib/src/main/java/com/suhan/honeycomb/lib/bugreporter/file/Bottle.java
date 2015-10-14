@@ -1,3 +1,26 @@
+/**
+ The MIT License (MIT)
+
+ Copyright (c) 2015 suhan lee
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 package com.suhan.honeycomb.lib.bugreporter.file;
 
 import android.content.Context;
@@ -20,19 +43,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by suhan on 10/13/15.
- */
 public class Bottle {
     private final String TAG = "Bottle";
     private final String SEPARATE = "/";
 
-    private final Context mContext;
     private final File mFile;
     private final String mFilePath;
 
     public Bottle(Context context) {
-        mContext = context;
         mFile = context.getFilesDir();
         mFilePath = mFile.getAbsolutePath() + SEPARATE;
     }
@@ -46,7 +64,6 @@ public class Bottle {
             Message msg = readLog(filePath);
             listMsg.add(msg);
         }
-        Log.i(TAG, list.toString());
         return listMsg;
     }
 
@@ -59,18 +76,17 @@ public class Bottle {
         }
     }
 
-    public String[] getList(File dir) {
+    private String[] getList(File dir) {
         if(dir != null && dir.exists()) {
             return dir.list();
         }
         return null;
     }
 
-    public String getFileName() {
+    private String getFileName() {
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy-MM-dd-HH-mm-ss", Locale.getDefault() );
         Date currentTime = new Date ();
-        String filename = "Log_" + mSimpleDateFormat.format ( currentTime );
-        return filename;
+        return "Log_" + mSimpleDateFormat.format ( currentTime );
     }
 
     public void saveLog(Message msg) {
@@ -84,11 +100,6 @@ public class Bottle {
         ObjectOutput s = null;
         try {
             s = new ObjectOutputStream(f);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             s.writeObject(msg);
             s.flush();
         } catch (IOException e) {
@@ -96,7 +107,7 @@ public class Bottle {
         }
     }
 
-    public Message readLog(String filePath) {
+    private Message readLog(String filePath) {
         FileInputStream in = null;
         try {
             in = new FileInputStream(filePath);
@@ -105,14 +116,9 @@ public class Bottle {
         }
 
         ObjectInput s = null;
-        try {
-            s = new ObjectInputStream(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         Message msg = null;
         try {
+            s = new ObjectInputStream(in);
             msg = (Message)s.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -123,7 +129,7 @@ public class Bottle {
         return msg;
     }
 
-    public void deleteLog(String filename) {
+    private void deleteLog(String filename) {
         File f = new File(filename);
 
         if (f.delete()) {
