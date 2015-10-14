@@ -1,7 +1,7 @@
 # Honeycomb
 Android Crash-Log Reporting Project (client &amp; server)
 
-Git user attention
+Introduction
 -----------------------
 
 1. Clone the repo from GitHub.
