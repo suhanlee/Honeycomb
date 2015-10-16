@@ -21,35 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+package com.honeycomb.client.lib.bugreporter;
 
-package com.suhan.honeycomb.lib.bugreporter.data;
+import com.honeycomb.client.lib.bugreporter.model.Message;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import java.util.List;
 
-public class App {
-    private final PackageManager mPackageManager;
-    private PackageInfo mPackageInfo;
+import retrofit.Callback;
+import retrofit.http.Body;
+import retrofit.http.GET;
+import retrofit.http.POST;
 
-    public App(Context context) {
-        mPackageManager = context.getPackageManager();
-        try {
-            mPackageInfo = mPackageManager.getPackageInfo(context.getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+public interface LogService {
+    @GET("/logs.json")
+    List<Message> listLog();
 
-    public String getVersionCode() {
-        return mPackageInfo.versionCode + "";
-    }
-
-    public String getVersionName() {
-        return mPackageInfo.versionName;
-    }
-
-    public String getSharedUserId() {
-        return mPackageInfo.sharedUserId;
-    }
+    @POST("/logs.json")
+    void postLog(@Body Message log, Callback<Message> cb);
 }

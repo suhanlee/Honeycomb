@@ -22,11 +22,11 @@
  SOFTWARE.
  */
 
-package com.suhan.honeycomb.lib.bugreporter;
+package com.honeycomb.client.lib.bugreporter;
 
-import com.suhan.honeycomb.lib.bugreporter.data.Device;
-import com.suhan.honeycomb.lib.bugreporter.file.Bottle;
-import com.suhan.honeycomb.lib.bugreporter.model.Message;
+import com.honeycomb.client.lib.bugreporter.data.Device;
+import com.honeycomb.client.lib.bugreporter.file.Bottle;
+import com.honeycomb.client.lib.bugreporter.model.Message;
 
 public class ReporterUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 

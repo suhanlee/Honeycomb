@@ -1,4 +1,4 @@
-package com.suhan.honeycomb.lib;
+package com.honeycomb.client.lib;
 
 import org.junit.Test;
 

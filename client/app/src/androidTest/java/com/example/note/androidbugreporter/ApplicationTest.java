@@ -1,4 +1,4 @@
-package com.suhanlee.note.androidbugreporter;
+package com.example.note.androidbugreporter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

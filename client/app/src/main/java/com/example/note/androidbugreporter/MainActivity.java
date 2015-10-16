@@ -1,11 +1,11 @@
-package com.suhanlee.note.androidbugreporter;
+package com.example.note.androidbugreporter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.suhan.honeycomb.lib.bugreporter.Reporter;
+import com.honeycomb.client.lib.bugreporter.Reporter;
 
 public class MainActivity extends AppCompatActivity {
 

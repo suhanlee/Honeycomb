@@ -22,14 +22,14 @@
  SOFTWARE.
  */
 
-package com.suhan.honeycomb.lib.bugreporter;
+package com.honeycomb.client.lib.bugreporter;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.suhan.honeycomb.lib.bugreporter.data.App;
-import com.suhan.honeycomb.lib.bugreporter.file.Bottle;
-import com.suhan.honeycomb.lib.bugreporter.model.Message;
+import com.honeycomb.client.lib.bugreporter.data.App;
+import com.honeycomb.client.lib.bugreporter.file.Bottle;
+import com.honeycomb.client.lib.bugreporter.model.Message;
 
 import java.util.List;
 
@@ -75,7 +75,7 @@ public class Reporter {
         List<Message> listMsg = bottle.loadPreviousLog();
 
         for (Message msg : listMsg) {
-            Reporter.postLog(msg);
+            postLog(msg);
         }
 
         bottle.clearAll();
@@ -93,7 +93,7 @@ public class Reporter {
         mService = mRestAdapter.create(LogService.class);
     }
 
-    public static void postLog(Message message) {
+    public void postLog(Message message) {
         mService.postLog(message, new Callback<Message>() {
             @Override
             public void success(Message message, Response response) {

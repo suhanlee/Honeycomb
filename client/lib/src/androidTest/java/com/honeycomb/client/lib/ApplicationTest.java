@@ -1,4 +1,4 @@
-package com.suhan.honeycomb.lib;
+package com.honeycomb.client.lib;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

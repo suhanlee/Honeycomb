@@ -21,12 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package com.suhan.honeycomb.lib.bugreporter.file;
+package com.honeycomb.client.lib.bugreporter.file;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.suhan.honeycomb.lib.bugreporter.model.Message;
+import com.honeycomb.client.lib.bugreporter.model.Message;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,12 +68,12 @@ public class Bottle {
     }
 
     public void clearAll() {
-        String[] list = getList(mFile);
-        String dirPath = mFile.getAbsolutePath() + SEPARATE;
-        for (String elem : list) {
-            String filePath = dirPath + elem;
-            deleteLog(filePath);
-        }
+//        String[] list = getList(mFile);
+//        String dirPath = mFile.getAbsolutePath() + SEPARATE;
+//        for (String elem : list) {
+//            String filePath = dirPath + elem;
+//            deleteLog(filePath);
+//        }
     }
 
     private String[] getList(File dir) {

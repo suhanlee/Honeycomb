@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.suhan.honeycomb.lib">
+    package="com.honeycomb.client.lib">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
