@@ -13,12 +13,17 @@ Introduction
          $ cd server
          $ bundle install 
          $ rails s
-
-3. Client (now example)
+        
+3. Client (app, lib)
 
          $ cd client && chmod +x gradlew
          $ ./gradlew
 
+Server demo 
+--------
+
+ ![Server demo](https://github.com/suhanlee/Honeycomb/blob/master/demo/server_screenshot.png)
+ 
 Library Setup
 ---------
 
