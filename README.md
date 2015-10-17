@@ -8,9 +8,10 @@ Introduction
 
          $ git clone https://github.com/suhanlee/Honeycomb.git
 
-2. Server
+2. Server (Rails, MongoDB)
 
          $ cd server
+         $ bundle install 
          $ rails s
 
 3. Client (now example)
