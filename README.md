@@ -20,5 +20,20 @@ Introduction
 
 Library Setup
 ---------
-        Reporter.init(getApplicationContext(), "http://10.0.2.2:3000"); // setup crash-log reporter
-        
+
+Here's a example code.
+
+```java
+public class ExamApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        /**
+         * For emulator ( host computer address : 10.0.2.2 )
+         * You can replace address with yours.
+         */
+        Bee.init(this, "http://10.0.2.2:3000");
+    }
+}
+```
