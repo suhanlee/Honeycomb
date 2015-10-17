@@ -24,6 +24,7 @@
 
 package com.honeycomb.client.lib.bugreporter;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -49,6 +50,7 @@ public class Reporter {
     private boolean mCrashTermination;
     private Context mContext;
     private App mApp;
+    private Application mApplication;
 
     public static Reporter getInstance() {
         if (mInstance == null) {
@@ -61,12 +63,13 @@ public class Reporter {
         mCrashTermination = true;
     }
 
-    public static void init(Context context, String endPoint) {
+    public static void init(Application application, String endPoint) {
         mEndPoint = endPoint;
         initAdapter();
-        getInstance().setContext(context);
+        getInstance().setApplication(application);
+        getInstance().setContext(application.getApplicationContext());
         getInstance().setCaughtHandler();
-        getInstance().initApp(context);
+        getInstance().initApp(application.getApplicationContext());
         getInstance().sendPreviousLog();
     }
 
@@ -129,5 +132,9 @@ public class Reporter {
 
     public App getApp() {
         return mApp;
+    }
+
+    public void setApplication(Application application) {
+        mApplication = application;
     }
 }

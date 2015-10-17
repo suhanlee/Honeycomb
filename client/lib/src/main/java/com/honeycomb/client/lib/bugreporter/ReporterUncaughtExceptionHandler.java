@@ -64,6 +64,9 @@ public class ReporterUncaughtExceptionHandler implements Thread.UncaughtExceptio
 //        }
 
         if (mReporter.isTermination()) {
+            /**
+             * after shutdown vm, device consumes many time to dump error-log.
+             */
             mDefaultHandler.uncaughtException(t, e);
         } else {
             android.os.Process.killProcess(android.os.Process.myPid());

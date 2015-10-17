@@ -14,12 +14,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * For emulator ( host computer address : 10.0.2.2 )
-         */
-        Reporter.init(getApplicationContext(), "http://10.0.2.2:3000");
-        Reporter.getInstance().setTermination(false);
-
         getError();
     }
 
