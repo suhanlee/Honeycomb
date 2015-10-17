@@ -65,6 +65,9 @@ public class ReporterUncaughtExceptionHandler implements Thread.UncaughtExceptio
 
         if (mReporter.isTermination()) {
             mDefaultHandler.uncaughtException(t, e);
+        } else {
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(10);
         }
     }
 
