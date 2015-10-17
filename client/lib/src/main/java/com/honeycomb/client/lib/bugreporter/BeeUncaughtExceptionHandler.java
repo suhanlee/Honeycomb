@@ -25,37 +25,35 @@
 package com.honeycomb.client.lib.bugreporter;
 
 import com.honeycomb.client.lib.bugreporter.data.Device;
-import com.honeycomb.client.lib.bugreporter.file.Bottle;
+import com.honeycomb.client.lib.bugreporter.storage.Bottle;
 import com.honeycomb.client.lib.bugreporter.model.Message;
 
-public class ReporterUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-    private final String TAG = "ReporterUncaughtExceptionHandler";
+    private final String TAG = "BeeUncaughtExceptionHandler";
 
     private final Thread.UncaughtExceptionHandler mDefaultHandler;
-    private final Reporter mReporter;
+    private Configuration mConfiguration;
     private boolean enabled;
 
-    public ReporterUncaughtExceptionHandler(Reporter reporter, Thread.UncaughtExceptionHandler handler) {
-        mReporter = reporter;
+    public BeeUncaughtExceptionHandler(Configuration configuration, Thread.UncaughtExceptionHandler handler) {
+        mConfiguration = configuration;
         mDefaultHandler = handler;
         enabled = true;
-    }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         Message message = new Message();
-        message.app_version = mReporter.getApp().getVersionCode();
+        message.app_version = Bee.getApp().getVersionCode();
         message.device = Device.getManufacture();
         message.contents = getStackTrace(e);
         message.os_version = Device.getOSAPiVersion() + "";
         message.model = Device.getModel();
 
-        Bottle bottle = new Bottle(mReporter.getContext());
+        Bottle bottle = new Bottle(Bee.getContext());
         bottle.saveLog(message);
 
 
@@ -63,11 +61,13 @@ public class ReporterUncaughtExceptionHandler implements Thread.UncaughtExceptio
 //            Reporter.postLog(message);
 //        }
 
-        if (mReporter.isTermination()) {
+        if (mConfiguration.isTermination()) {
             /**
              * after shutdown vm, device consumes many time to dump error-log.
              */
-            mDefaultHandler.uncaughtException(t, e);
+            if (mDefaultHandler != null) {
+                mDefaultHandler.uncaughtException(t, e);
+            }
         } else {
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(10);
@@ -85,9 +85,4 @@ public class ReporterUncaughtExceptionHandler implements Thread.UncaughtExceptio
 
         return result;
     }
-
-
-
-//    android.os.Process.killProcess(android.os.Process.myPid());
-//    System.exit(10);
 }

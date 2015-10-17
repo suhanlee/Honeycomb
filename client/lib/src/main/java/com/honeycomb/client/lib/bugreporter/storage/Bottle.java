@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-package com.honeycomb.client.lib.bugreporter.file;
+package com.honeycomb.client.lib.bugreporter.storage;
 
 import android.content.Context;
 import android.util.Log;
@@ -68,12 +68,12 @@ public class Bottle {
     }
 
     public void clearAll() {
-//        String[] list = getList(mFile);
-//        String dirPath = mFile.getAbsolutePath() + SEPARATE;
-//        for (String elem : list) {
-//            String filePath = dirPath + elem;
-//            deleteLog(filePath);
-//        }
+        String[] list = getList(mFile);
+        String dirPath = mFile.getAbsolutePath() + SEPARATE;
+        for (String elem : list) {
+            String filePath = dirPath + elem;
+            deleteLog(filePath);
+        }
     }
 
     private String[] getList(File dir) {
@@ -97,7 +97,7 @@ public class Bottle {
             e.printStackTrace();
         }
 
-        ObjectOutput s = null;
+        ObjectOutput s;
         try {
             s = new ObjectOutputStream(f);
             s.writeObject(msg);
@@ -115,7 +115,7 @@ public class Bottle {
             e.printStackTrace();
         }
 
-        ObjectInput s = null;
+        ObjectInput s;
         Message msg = null;
         try {
             s = new ObjectInputStream(in);
