@@ -69,7 +69,7 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
         String result ="";
         result += e.getMessage() + "\n";
 
-        StackTraceElement[] lists = e.getCause().getStackTrace();
+        StackTraceElement[] lists = e.getStackTrace();
         for(StackTraceElement list: lists) {
             result += list.toString() + "\n";
         }
