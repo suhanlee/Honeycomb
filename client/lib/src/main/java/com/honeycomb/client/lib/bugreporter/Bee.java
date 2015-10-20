@@ -15,8 +15,10 @@
  */
 package com.honeycomb.client.lib.bugreporter;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 
 import com.honeycomb.client.lib.bugreporter.data.App;
 import com.honeycomb.client.lib.bugreporter.sender.LogService;
@@ -38,6 +40,7 @@ public class Bee {
     private static Configuration mConfiguration;
     private static Sender mSender;
     private static BeeUncaughtExceptionHandler mUncaughtExceptionHandler;
+    private static Activity mActivity;
 
     public static void init(Application application, String endPoint) {
         mEndPoint = endPoint;
@@ -52,8 +55,52 @@ public class Bee {
         mSender = new Sender(mContext, mEndPoint);
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         mUncaughtExceptionHandler = new BeeUncaughtExceptionHandler(mConfiguration, mDefaultHandler);
+        registerActivityLifeCycle();
 
         mSender.sendAllLog();
+    }
+
+    private static void registerActivityLifeCycle() {
+        mApplication.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                mActivity = activity;
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+    }
+
+    public static Activity getActivity() {
+        return mActivity;
     }
 
     public static Context  getContext() {

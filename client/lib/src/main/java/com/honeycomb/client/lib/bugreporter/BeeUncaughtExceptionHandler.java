@@ -18,6 +18,7 @@ package com.honeycomb.client.lib.bugreporter;
 import com.honeycomb.client.lib.bugreporter.data.Device;
 import com.honeycomb.client.lib.bugreporter.storage.Bottle;
 import com.honeycomb.client.lib.bugreporter.model.Message;
+import com.honeycomb.client.lib.bugreporter.util.ViewScreen;
 
 public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
@@ -47,10 +48,14 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
         Bottle bottle = new Bottle(Bee.getContext());
         bottle.saveLog(message);
 
-
 //        if (enabled) {
 //            Reporter.postLog(message);
 //        }
+
+        /**
+         * Take a picture on view
+         */
+        ViewScreen.capture(Bee.getActivity().getWindow().getDecorView().getRootView(), "test_screenshot.jpg");
 
         if (mConfiguration.isTermination()) {
             /**
