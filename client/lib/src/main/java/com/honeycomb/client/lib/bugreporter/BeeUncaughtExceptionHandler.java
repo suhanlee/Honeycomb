@@ -28,6 +28,8 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
     private Configuration mConfiguration;
     private boolean enabled;
 
+    private static volatile boolean mCrashing = false;
+
     public BeeUncaughtExceptionHandler(Configuration configuration, Thread.UncaughtExceptionHandler handler) {
         mConfiguration = configuration;
         mDefaultHandler = handler;
@@ -38,6 +40,11 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+
+        // Don't re-enter -- avoid infinite loops if crash-reporting crashes.
+        if (mCrashing) return;
+        mCrashing = true;
+
         Message message = new Message();
         message.app_version = Bee.getApp().getVersionCode();
         message.device = Device.getManufacture();
