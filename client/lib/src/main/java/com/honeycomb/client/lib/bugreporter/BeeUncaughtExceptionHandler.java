@@ -15,9 +15,11 @@
  */
 package com.honeycomb.client.lib.bugreporter;
 
+import android.os.Handler;
+
 import com.honeycomb.client.lib.bugreporter.data.Device;
-import com.honeycomb.client.lib.bugreporter.storage.Bottle;
 import com.honeycomb.client.lib.bugreporter.model.Message;
+import com.honeycomb.client.lib.bugreporter.storage.Bottle;
 import com.honeycomb.client.lib.bugreporter.util.ViewScreen;
 
 public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
@@ -40,6 +42,11 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+
+        /**
+         * show termination ui.
+         */
+        UiThread.get().show();
 
         // Don't re-enter -- avoid infinite loops if crash-reporting crashes.
         if (mCrashing) return;
@@ -64,14 +71,20 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
          */
         ViewScreen.capture(Bee.getActivity().getWindow().getDecorView().getRootView(), "test_screenshot.jpg");
 
-        if (mConfiguration.isTermination()) {
-            /**
-             * after shutdown vm, device consumes many time to dump error-log.
-             */
-            if (mDefaultHandler != null) {
-                mDefaultHandler.uncaughtException(t, e);
+        try {
+            if (mConfiguration.isTermination()) {
+                /**
+                 * after shutdown vm, device consumes many time to dump error-log.
+                 */
+//            if (mDefaultHandler != null) {
+//                mDefaultHandler.uncaughtException(t, e);
+//            }
+                Handler handler = new UiHandler();
+                handler.sendEmptyMessage(0);
             }
-        } else {
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(10);
         }
