@@ -18,8 +18,12 @@ package com.honeycomb.client.lib.bugreporter;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
+import com.honeycomb.client.lib.bugreporter.activity.CrashActivity;
 import com.honeycomb.client.lib.bugreporter.data.App;
 import com.honeycomb.client.lib.bugreporter.sender.LogService;
 import com.honeycomb.client.lib.bugreporter.sender.Sender;
@@ -53,11 +57,33 @@ public class Bee {
         mApp = new App(mContext);
         mConfiguration = new Configuration();
         mSender = new Sender(mContext, mEndPoint);
-        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        mUncaughtExceptionHandler = new BeeUncaughtExceptionHandler(mConfiguration, mDefaultHandler);
         registerActivityLifeCycle();
 
         mSender.sendAllLog();
+
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        mUncaughtExceptionHandler = new BeeUncaughtExceptionHandler(mConfiguration, mDefaultHandler, new Handler());
+
+        while (true) {
+            try {
+                Looper.loop();
+                Thread.setDefaultUncaughtExceptionHandler(mDefaultHandler);
+                throw new RuntimeException("Main thread loop unexpectedly exited");
+            } catch (BackgroundThreadException bte) {
+                // Background Thread Crash
+                showCrashDisplayActivity(bte);
+            } catch (Exception e) {
+                // UI Crash
+                showCrashDisplayActivity(e);
+            }
+        }
+    }
+
+    static void showCrashDisplayActivity(Throwable e) {
+        Intent i = new Intent(mApplication, CrashActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("e", e);
+        mApplication.startActivity(i);
     }
 
     private static void registerActivityLifeCycle() {

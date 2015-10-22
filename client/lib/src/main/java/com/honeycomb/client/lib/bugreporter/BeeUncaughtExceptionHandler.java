@@ -27,26 +27,23 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
     private final String TAG = "BeeUncaughtExceptionHandler";
 
     private final Thread.UncaughtExceptionHandler mDefaultHandler;
+    private final Handler mUiHandler;
     private Configuration mConfiguration;
     private boolean enabled;
 
     private static volatile boolean mCrashing = false;
 
-    public BeeUncaughtExceptionHandler(Configuration configuration, Thread.UncaughtExceptionHandler handler) {
+    public BeeUncaughtExceptionHandler(Configuration configuration, Thread.UncaughtExceptionHandler handler, Handler uiHandler) {
         mConfiguration = configuration;
         mDefaultHandler = handler;
+        mUiHandler = uiHandler;
         enabled = true;
 
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
-
-        /**
-         * show termination ui.
-         */
-        UiThread.get().show();
+    public void uncaughtException(Thread t, final Throwable e) {
 
         // Don't re-enter -- avoid infinite loops if crash-reporting crashes.
         if (mCrashing) return;
@@ -71,23 +68,32 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
          */
         ViewScreen.capture(Bee.getActivity().getWindow().getDecorView().getRootView(), "test_screenshot.jpg");
 
-        try {
-            if (mConfiguration.isTermination()) {
-                /**
-                 * after shutdown vm, device consumes many time to dump error-log.
-                 */
-//            if (mDefaultHandler != null) {
-//                mDefaultHandler.uncaughtException(t, e);
+//        try {
+//            if (mConfiguration.isTermination()) {
+//                /**
+//                 * after shutdown vm, device consumes many time to dump error-log.
+//                 */
+//                if (mDefaultHandler != null) {
+//                    mDefaultHandler.uncaughtException(t, e);
+//                }
+//                Handler handler = new UiHandler();
+//                handler.sendEmptyMessage(0);
 //            }
-                Handler handler = new UiHandler();
-                handler.sendEmptyMessage(0);
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//        } finally {
+//            android.os.Process.killProcess(android.os.Process.myPid());
+//            System.exit(10);
+//        }
+
+        /**
+         * Send Background Excception
+         */
+        mUiHandler.post(new Runnable() {
+            public void run() {
+                throw new BackgroundThreadException(e);
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        } finally {
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(10);
-        }
+        });
     }
 
     private String getStackTrace(Throwable e) {
