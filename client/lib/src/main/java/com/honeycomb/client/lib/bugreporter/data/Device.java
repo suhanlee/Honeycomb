@@ -17,7 +17,11 @@ package com.honeycomb.client.lib.bugreporter.data;
 
 import android.os.Build;
 
+import com.honeycomb.client.lib.bugreporter.util.SecurityUtil;
+
 public class Device {
+
+    private static boolean rooted;
 
     /**
         Log.i(TAG, "BOARD = " + Build.BOARD);
@@ -72,5 +76,9 @@ public class Device {
 
     public static String getManufacture() {
         return Build.MANUFACTURER;
+    }
+
+    public static boolean isRooted() {
+        return SecurityUtil.isRooted();
     }
 }
