@@ -56,7 +56,7 @@ public class Bottle {
     }
 
     public List<Message> loadPreviousLog() {
-        List<Message> listMsg = new ArrayList<Message>();
+        List<Message> listMsg = new ArrayList<>();
 
         String[] list = getList(mFile);
         for (String elem : list) {
