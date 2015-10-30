@@ -19,3 +19,6 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore gem.lock
+Gemfile.lock
