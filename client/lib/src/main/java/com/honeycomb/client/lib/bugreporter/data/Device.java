@@ -21,25 +21,21 @@ import com.honeycomb.client.lib.bugreporter.util.SecurityUtil;
 
 public class Device {
 
-    private static boolean rooted;
+    public static String getProduct() {
+        return Build.PRODUCT;
+    }
 
-    /**
-        Log.i(TAG, "BOARD = " + Build.BOARD);
-		Log.i(TAG, "BRAND = " + Build.BRAND);
-		Log.i(TAG, "CPU_ABI = " + Build.CPU_ABI);
-		Log.i(TAG, "DEVICE = " + Build.DEVICE);
-		Log.i(TAG, "DISPLAY = " + Build.DISPLAY);
-		Log.i(TAG, "FINGERPRINT = " + Build.FINGERPRINT);
-		Log.i(TAG, "HOST = " + Build.HOST);
-		Log.i(TAG, "ID = " + Build.ID);
-		Log.i(TAG, "MANUFACTURER = " + Build.MANUFACTURER);
-		Log.i(TAG, "MODEL = " + Build.MODEL);
-		Log.i(TAG, "PRODUCT = " + Build.PRODUCT);
-		Log.i(TAG, "TAGS = " + Build.TAGS);
-		Log.i(TAG, "TYPE = " + Build.TYPE);
-		Log.i(TAG, "USER = " + Build.USER);
-		Log.i(TAG, "VERSION.RELEASE = " + Build.VERSION.RELEASE);
-     */
+    public static String getBoard() {
+        return Build.BOARD;
+    }
+
+    public static String getTAGS() {
+        return Build.TAGS;
+    }
+
+    public static String getTYPE() {
+        return Build.TYPE;
+    }
 
     public static String getOSVersion() {
         String unknown = "UNKNOWN";
