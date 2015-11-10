@@ -21,7 +21,7 @@ import com.honeycomb.client.lib.BuildConfig;
 
 public class ALog {
 
-    private static String TAG = "ALOG";
+    private static String TAG = "HoneyComb";
     private static int MAX_LENGTH = 2048;
     private static String PREFIX = "";
 
