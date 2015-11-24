@@ -25,17 +25,10 @@ import android.os.Looper;
 
 import com.honeycomb.client.lib.bugreporter.activity.CrashActivity;
 import com.honeycomb.client.lib.bugreporter.data.App;
-import com.honeycomb.client.lib.bugreporter.sender.LogService;
 import com.honeycomb.client.lib.bugreporter.sender.Sender;
 
-import retrofit.RestAdapter;
-
 public class Bee {
-    private static String TAG = "Bee";
-
     private static String mEndPoint;
-    private static RestAdapter mRestAdapter;
-    private static LogService mService;
     private static Thread.UncaughtExceptionHandler mDefaultHandler;
 
     private static Context mContext;

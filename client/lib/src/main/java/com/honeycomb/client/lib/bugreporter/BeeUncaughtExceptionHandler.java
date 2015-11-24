@@ -24,8 +24,6 @@ import com.honeycomb.client.lib.bugreporter.util.ViewScreen;
 
 public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-    private final String TAG = "BeeUncaughtExceptionHandler";
-
     private final Thread.UncaughtExceptionHandler mDefaultHandler;
     private final Handler mUiHandler;
     private Configuration mConfiguration;
@@ -87,7 +85,7 @@ public class BeeUncaughtExceptionHandler implements Thread.UncaughtExceptionHand
 //        }
 
         /**
-         * Send Background Excception
+         * Send Background Exception
          */
         mUiHandler.post(new Runnable() {
             public void run() {
