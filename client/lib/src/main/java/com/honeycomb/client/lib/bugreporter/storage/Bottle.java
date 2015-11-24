@@ -24,9 +24,9 @@
 package com.honeycomb.client.lib.bugreporter.storage;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.honeycomb.client.lib.bugreporter.model.Message;
+import com.honeycomb.client.lib.bugreporter.util.ALog;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class Bottle {
-    private final String TAG = "Bottle";
     private final String SEPARATE = "/";
 
     private final File mFile;
@@ -133,9 +132,9 @@ public class Bottle {
         File f = new File(filename);
 
         if (f.delete()) {
-           Log.i(TAG, "delete file : success");
+            ALog.i("delete file : success");
         } else {
-           Log.e(TAG, "delete file : fail");
+            ALog.i("delete file : fail");
         }
     }
 }
